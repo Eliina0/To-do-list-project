@@ -87,8 +87,6 @@ function checkDuplicate(list , txt){
 }
 function checkDuplicateSubitem( item , txt){
     var subitems = item.data.subItems || [];
-    console.log(item);
-    console.log(subitems);
     for (var i = 0 ; i < subitems.length ; i++){
         var subitemText = subitems[i].text;
         if( subitemText === txt){
