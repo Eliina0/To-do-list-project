@@ -1,0 +1,114 @@
+* {
+    margin: auto;
+    padding: 0;
+    font-family: fantasy;
+    box-sizing: border-box;
+}
+
+#backimg {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('image1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+#title {
+    border-radius: 10px;
+    width: 100%;
+    max-width: 540px;
+    background-color: rgb(176, 208, 248);
+    padding: 30px 30px;
+    overflow-y: auto;
+}
+
+#title h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#toDoo {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+input {
+    padding: 10px;
+    flex: 1;
+    background-color: rgb(201, 221, 246);
+    border-radius: 20px;
+}
+
+button {
+    background: transparent;
+    border: none;
+    margin-left: 15px;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+ul li {
+    list-style: none;
+    margin-bottom: 15px; 
+    position: relative;
+}
+
+.btn-delete, .btn-add {
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    border-radius: 10px;
+}
+
+.btn-delete {
+    background-color: #ff3333;
+    color: #fff;
+    right: 5px;
+}
+
+.btn-add {
+    background-color: #3399ff;
+    color: #fff;
+    right: 65px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#list > li {
+    background-color: #99ccff;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.sub-item {
+    background-color: #aad4ff;
+    margin-top: 15px; 
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 15px;
+}
+.sub-item .btn-delete{
+    top : 5px;
+}
+
+
+
+
