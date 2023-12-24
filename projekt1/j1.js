@@ -28,7 +28,8 @@ function createListItem(txt){
     var listItem = document.createElement('li');
     listItem.innerHTML = `
     <input type='checkbox'>
-    ${txt}
+    <span>${txt}</span>
+    <button class='btn-edit' onclick='editTask(this)'>Edit</button>
     <button class='btn-delete' onclick='deleteItem(this)'> Delete </button>
     <button class='btn-add' onclick='addItem(this)'>Add </button> `;
 
@@ -59,20 +60,11 @@ function subitemDone(checkbox){
     var listItemData = listItem.data;
     var subItemData = checkbox.parentNode.data;
     subItemData.done = checkbox.checked;
-    var count = 0 ;
-    for (var i = 0 ; i < listItemData.subItems.length ; i++){
-        if(listItemData.subItems[i].done){
-            count++;
-        }
-    }
-    if(count === listItemData.subItems.length){
-        listItem.querySelector('input[type="checkbox"]').checked = true;
-        listItemData.done = true;
-    }
-    else{
-        listItem.querySelector('input[type="checkbox"]').checked = false;
-        listItemData.done = false;
-    }
+    var allSubitemsDone = listItemData.subItems.every(function(subitem) {
+        return subitem.done;
+    });
+    listItem.querySelector('input[type="checkbox"]').checked = allSubitemsDone;
+    listItemData.done = allSubitemsDone;  
     updateItemInLocalStorage(listItemData);
 }
 function checkDuplicate(list , txt){
@@ -137,6 +129,12 @@ function addItem(button){
             listItemParent.appendChild(listItem);
             listItemParentData.subItems.push(listItemData);
             document.getElementById('text').value = '';
+
+            if (listItemParentData.done) {
+                listItem.querySelector('input[type="checkbox"]').checked = true;
+                listItemData.done = true;
+            }
+
             updateItemInLocalStorage(listItemParentData);
 
         }else{
@@ -170,7 +168,13 @@ function deleteSubitem(subitem) {
     listItemData.subItems = listItemData.subItems.filter(function(item){
         return item.text !== subItemData.text;
     }); 
-    var doList = JSON.parse(localStorage.getItem('toDoList'));
+   
+    var allSubitemsDone = listItemData.subItems.every(function(subitem) {
+        return subitem.done;
+    });
+    listItem.querySelector('input[type="checkbox"]').checked = allSubitemsDone;
+    listItemData.done = allSubitemsDone;
+
     updateItemInLocalStorage(listItemData);
     subitem.parentNode.remove();
 }
@@ -196,3 +200,30 @@ function fromLocalStorage() {
     });
 }
 fromLocalStorage();
+
+function editTask(button) {
+    var listItem = button.parentNode;
+    var listItemData = listItem.data;
+    var doList = JSON.parse(localStorage.getItem('toDoList'));
+    var newText = document.getElementById('text').value.trim();
+    var index = findIndexLocalStorage(doList, listItemData);
+
+    if (newText !== null && newText !== '' && newText.length >= 2 && newText.length <= 50 && !/\d/.test(newText)) {
+        if (!checkDuplicate(document.getElementById('list'), newText)) {
+        listItemData.text = newText;
+        listItem.querySelector('span').innerText = newText;
+
+        doList[index] = listItemData;
+        localStorage.setItem('toDoList', JSON.stringify(doList));
+    }else{
+        alert('Kjo detyrë është tashmë në listë.');
+    }
+    }else {
+    alert('Teksti duhet të jetë midis 2 dhe 50 karaktereve, të mos jetë bosh dhe të mos përmbajë numra.');
+}
+
+    document.getElementById('text').value = '';
+}
+
+
+
