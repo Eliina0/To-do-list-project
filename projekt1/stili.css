@@ -109,6 +109,12 @@ input[type="checkbox"] {
     top : 5px;
 }
 
-
-
-
+.btn-edit {
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    border-radius: 10px;
+    background-color: #66cc66; 
+    color: #fff; 
+    right: 110px; 
+}
